@@ -18,6 +18,16 @@ app.use(router)
 
 
 io.on('connection', socket => {
+      if (socket.connected) {
+        console.log('a user connected');
+        // console.log(socket);
+        socket.emit('message', 'Welcome John')
+
+        socket.on('send', (msg) => {
+            if (msg) {
+              socket.emit('res', msg)
+          }
+      
     const id = socket.handshake.query.id
     socket.join(id)
 
@@ -31,15 +41,7 @@ io.on('connection', socket => {
             })
         })
     })
-})
+  }})
 
-// io.on("connection", (socket) => {
-//     console.log('what is socket: ', socket)
-//     console.log('Socket is active to be connected')
 
-//     socket.on('chat', (payload) => {
-//         console.log('what is payload: ', payload)
-//         io.emit('message', payload)
-//     })
-// });
 
